@@ -1,5 +1,15 @@
-module.exports.index = (request, response) => {
+module.exports.index = (_request, response) => {
   response.json({
-     message: "Hello World"
+    message: "Hello World",
   });
+};
+
+module.exports.createPerson = (request, response) => {
+  const { firstName, lastName } = request.body;
+  Person.create({
+    firstName,
+    lastName,
+  })
+    .then((person) => response.json(person))
+    .catch((err) => response.json(err));
 };
