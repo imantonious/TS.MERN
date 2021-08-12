@@ -25,11 +25,25 @@ const Main: React.FC = () => {
     fetchPeopleData();
   }, []);
 
+  const removeFromDom = (personId: string): void => {
+    setPeople(people.filter((person: Person) => person._id !== personId));
+  };
+
+  const createPerson = (person: any) => {
+    axios.post("http://localhost:8000/api/person", person).then((res: AxiosResponse<any>) => {
+      setPeople([...people, res.data]);
+    });
+  };
+
   return (
     <div>
-      <PersonForm />
+      <PersonForm
+        onSubmitProp={createPerson}
+        initialFirstName=""
+        initialLastName=""
+      />
       <hr />
-      {loaded && <PersonList people={people} />}
+      {loaded && <PersonList people={people} removeFromDom={removeFromDom} />}
     </div>
   );
 };

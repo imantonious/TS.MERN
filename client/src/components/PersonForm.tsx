@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { FormEvent, useState } from "react";
+import axios, { AxiosResponse } from "axios";
 
-const PersonForm: React.FC = () => {
+// type imports
+import { Person } from "../common/interfaces";
+import { PersonFormProps } from "../common/interfaces";
+
+const PersonForm: React.FC<PersonFormProps> = (props) => {
   //keep track of what is being typed via useState hook
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
+  const { initialFirstName, initialLastName, onSubmitProp } = props;
+  const [firstName, setFirstName] = useState<string>(initialFirstName);
+  const [lastName, setLastName] = useState<string>(initialLastName);
 
   //handler when the form is submitted
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) : void => {
+  const onSubmitHandler = (e: FormEvent<HTMLFormElement>): void => {
     // prevent default behavior of the submit
     e.preventDefault();
+    onSubmitProp({ firstName, lastName });
 
     //make a post request to create a new person
     axios
@@ -17,7 +23,7 @@ const PersonForm: React.FC = () => {
         firstName,
         lastName,
       })
-      .then((res) => console.log(res))
+      .then((res: AxiosResponse<Person>) => console.log(res))
       .catch((err) => console.log(err));
   };
 
@@ -26,12 +32,22 @@ const PersonForm: React.FC = () => {
       <p>
         <label>First Name</label>
         <br />
-        <input type="text" onChange={(e) => setFirstName(e.target.value)} />
+        <input
+          type="text"
+          name="firstName"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
       </p>
       <p>
         <label>Last Name</label>
         <br />
-        <input type="text" onChange={(e) => setLastName(e.target.value)} />
+        <input
+          type="text"
+          name="lastName"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
       </p>
       <input type="submit" />
     </form>

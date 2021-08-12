@@ -4,6 +4,7 @@ mongoose
   .connect("mongodb://localhost/crmdbts", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false
   })
   .then(() => console.log("Established a connection to the database"))
   .catch((err) =>

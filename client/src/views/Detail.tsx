@@ -5,6 +5,9 @@ import axios, { AxiosResponse } from "axios";
 // type imports
 import { Person } from "../common/interfaces";
 
+// css imports
+import '../styles/detail.css';
+
 const Detail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
@@ -30,6 +33,7 @@ const Detail: React.FC = () => {
 
   return (
     <div>
+      <a className="top-corner" href="/people/">go back</a>
       <p>First Name: {person.firstName}</p>
       <p>Last Name: {person.lastName}</p>
     </div>

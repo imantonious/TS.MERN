@@ -5,8 +5,14 @@ export interface Person {
 
 export interface PersonListProps {
   people: Person[];
+  removeFromDom: (personId: string) => void;
 }
 
+export interface PersonFormProps {
+  initialFirstName: string,
+  initialLastName: string,
+  onSubmitProp: (_: any) => void;
+}
 export interface Person {
   _id?: string;
 }
